@@ -1,0 +1,65 @@
+<!-- candidate_profile.html -->
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Candidate Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="text-white">Candidate Profile</h4>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Left column for candidate details and profile image -->
+                        <div class="col-md-4">
+                            <div class="text-center mb-4">
+                                <img src="{{ candidate.profile.url }}" alt="Profile Image" class="img-thumbnail rounded-circle" style="max-width: 150px; max-height: 150px;">
+                            </div>
+                            <p><strong>Name:</strong> {{ candidate.name }}</p>
+                            <p><strong>Email:</strong> {{ candidate.email }}</p>
+                            <p><strong>Phone:</strong> {{ candidate.phone }}</p> 
+
+                            <a class="btn btn-primary" href="{% url 'src:candidate_profile_update' %}" role="button">Update</a>
+                        </div>
+
+                        <!-- Right column for applied jobs -->
+                        <div class="col-md-8">
+                            <h4 class="mb-4">Applied Jobs</h4>
+                            {% if jobs %}
+                                <ul class="list-group">
+                                    {% for job in jobs %}
+                                        <li class="list-group-item">
+                                            
+                                            <h6>{{ job.new_job_id.title }}</h6>
+                                            <p>{{ job.new_job_id.company }} - {{ job.city }}</p>
+                                            {% if job.selected %}
+                                                    <h6 class="text-success">Selected </h6>
+                                            {% elif job.rejected %}
+                                            <h6 class="text-danger"> Rejected </h6>
+                                            {% else %}
+                                            <h6 class="text-dark"> Pending </h6>
+                                            {% endif %}
+
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>No applied jobs yet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

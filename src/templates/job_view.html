@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}
+Home 
+{% endblock %}
+{% block content %}
+
+<style>
+    /* Custom styles for this template */
+    body {
+        padding-top: 40px;
+        background-color: #f8f9fa;
+    }
+    .job-details-card {
+        max-width: 100vw;
+        margin: 0 auto;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+    .job-details-card h2 {
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+    }
+    .job-details-card p {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #333;
+    }
+    .contact-info {
+        margin-top: 30px;
+        border-top: 1px solid #ccc;
+        padding-top: 15px;
+    }
+    .btn-apply {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+    }
+    .btn-apply:hover {
+        background-color: #0056b3;
+    }
+</style>
+<!-- job_detail.html -->
+
+<div class="container">
+    <div class="job-details-card mt-5">
+        <h2 class="mb-4">{{ job.title }}</h2>
+        <p>{{ job.description }}</p>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Salary:</strong> ${{ job.salary }}</p>
+                <p><strong>Company:</strong> {{ job.company }}</p>
+                <p><strong>Location:</strong> {{ job.city }}</p>
+                <p><strong>Category:</strong> {{ job.category }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Contact:</strong> {{ job.contact }}</p>
+                <p><strong>Email:</strong> {{ job.email }}</p>
+                <p><strong>Address:</strong> {{ job.address }}</p>
+            </div>
+        </div>
+        
+        {% if user.is_authenticated %}
+        
+        <div class="contact-info">
+            <p>If you are interested in this position, please apply using the button below:</p>
+            <a class="btn btn-primary" href="{% url 'src:job_apply' job.id %}" role="button">Apply Now</a>
+        </div>
+        {% else %}
+        
+        <div class="contact-info">
+            <p>If you are interested in this position, please login to apply</p>
+            <a class="btn btn-primary" href="{% url 'src:login' %}" role="button">Login Now</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
